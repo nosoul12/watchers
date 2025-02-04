@@ -1,6 +1,7 @@
 // movie_card.dart
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
+import 'package:watchers/src/screens/movie_detail_screen.dart';
 
 class MovieCard extends StatelessWidget {
   final String title;
@@ -51,28 +52,9 @@ class MovieCard extends StatelessWidget {
         );
       },
       openBuilder: (context, closeContainer) {
-        return Scaffold(
-          appBar: AppBar(title: Text(title)),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.network(imageUrl),
-                const SizedBox(height: 20),
-                Text(
-                  title,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle add/remove from watchlist
-                  },
-                  child: const Text('Add to Watchlist'),
-                ),
-              ],
-            ),
-          ),
+        return MovieDetailScreen(
+          title: title,
+          imageUrl: imageUrl,
         );
       },
     );
