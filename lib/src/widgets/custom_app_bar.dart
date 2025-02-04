@@ -9,18 +9,7 @@ class Appt extends StatelessWidget {
     return Row(
       children: [
         Text('Watcher'),
-        IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SearBar(),
-                  ));
-            },
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ))
+   
       ],
     );
   }
