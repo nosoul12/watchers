@@ -1,0 +1,77 @@
+{
+    "terrys-todos.data": [
+        {
+            "type": "Todo",
+            "id": "tjiv8PgKpcJlECWT8Y8nlrasHDqVIXsC",
+            "text": "fix api call of trending",
+            "date": "4.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "6rErC3ENBaWCewyxXt#_MFOLyQA5Gwgs",
+            "text": "make database ",
+            "date": "4.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "V74zYutNCR1-pKVfE#HCsCXOjYYWP5eM",
+            "text": "CRUD operation api for database and search",
+            "date": "4.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "Qsn9KuGo8rdSJFqq-jeUk6VzfozNdNh6",
+            "text": "attach databse with front end ",
+            "date": "4.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "sW9Tqhw5VkUuYKQ#XLnpesAptGxYGnNu",
+            "text": "search working check ,",
+            "date": "4.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "H34hnBp_S-UKJEGDukK_qA1FI5lsBk8j",
+            "text": "t add in watchlist and fac check",
+            "date": "4.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "mrE4t9gXLbtzA-rrfWlta4t9sbuDpy5k",
+            "text": "movie detail screen UI clean and healthy",
+            "date": "4.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "CG7b5L1uZb-5l5jtmygRZKfuzbZcSG03",
+            "text": "fix UI of app",
+            "date": "4.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        }
+    ],
+    "terrys-todos.done-todos": []
+}

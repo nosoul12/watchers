@@ -37,26 +37,93 @@ class MovieDetailScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(imageUrl),
-            const SizedBox(height: 20),
-            Text(
-              title,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            // Movie Poster
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  imageUrl,
+                  height: 300,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                if (isWatchlisted) {
-                  watchlistProvider.removeFromWatchlist(title);
-                } else {
-                  watchlistProvider.addToWatchlist(title, imageUrl);
-                }
-              },
-              child: Text(isWatchlisted ? 'Remove from Watchlist' : 'Add to Watchlist'),
+
+            // Movie Title
+            Center(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            // Watchlist Button
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  if (isWatchlisted) {
+                    watchlistProvider.removeFromWatchlist(title);
+                  } else {
+                    watchlistProvider.addToWatchlist(title, imageUrl);
+                  }
+                },
+                child: Text(
+                  isWatchlisted ? 'Remove from Watchlist' : 'Add to Watchlist',
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Description Section
+            const Text(
+              "Description",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Text(
+                "Movie description will be shown here from API.",
+                style: TextStyle(fontSize: 16, color: Colors.black54),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Cast Section
+            const Text(
+              "Cast",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              width: double.infinity,
+              height: 100,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Center(
+                child: Text(
+                  "Cast details will be shown here from API.",
+                  style: TextStyle(fontSize: 16, color: Colors.black54),
+                ),
+              ),
             ),
           ],
         ),
