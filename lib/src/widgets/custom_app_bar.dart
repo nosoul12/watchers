@@ -9,7 +9,6 @@ class Appt extends StatelessWidget {
     return Row(
       children: [
         Text('Watcher'),
-   
       ],
     );
   }

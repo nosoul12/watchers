@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watchers/src/providers/watchlist_provider.dart';
-import 'movie_detail_screen.dart';
+import 'package:watchers/src/screens/movie_detail_screen.dart';
 
 class WatchlistScreen extends StatelessWidget {
   const WatchlistScreen({super.key});
@@ -20,7 +20,8 @@ class WatchlistScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final movie = watchlist[index];
                 return ListTile(
-                  leading: Image.network(movie['imageUrl']!, width: 50, height: 75, fit: BoxFit.cover),
+                  leading: Image.network(movie['imageUrl']!,
+                      width: 50, height: 75, fit: BoxFit.cover),
                   title: Text(movie['title']!),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete, color: Colors.red),
@@ -32,11 +33,11 @@ class WatchlistScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MovieDetailScreen(
-                          title: movie['title']!,
-                          imageUrl: movie['imageUrl']!,
-                        ),
-                      ),
+                          builder: (context) => MovieDetailScreen(
+                                movieId: movie['id'], // Add this
+                                title: movie['title'],
+                                imageUrl: movie['imageUrl'],
+                              )),
                     );
                   },
                 );

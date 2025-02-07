@@ -6,8 +6,13 @@ import 'package:watchers/src/screens/movie_detail_screen.dart';
 class MovieCard extends StatelessWidget {
   final String title;
   final String imageUrl;
+  final int id;
 
-  const MovieCard({super.key, required this.title, required this.imageUrl});
+  const MovieCard(
+      {super.key,
+      required this.title,
+      required this.imageUrl,
+      required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +60,7 @@ class MovieCard extends StatelessWidget {
         return MovieDetailScreen(
           title: title,
           imageUrl: imageUrl,
+          movieId: id,
         );
       },
     );

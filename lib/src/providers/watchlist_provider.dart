@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
 
 class WatchlistProvider with ChangeNotifier {
-  final List<Map<String, String>> _watchlist = [];
-  final List<Map<String, String>> _favorites = [];
+  final List<Map<String, dynamic>> _watchlist = [];
+  final List<Map<String, dynamic>> _favorites = [];
 
-  List<Map<String, String>> get watchlist => _watchlist;
-  List<Map<String, String>> get favorites => _favorites;
+  List<Map<String, dynamic>> get watchlist => _watchlist;
+  List<Map<String, dynamic>> get favorites => _favorites;
 
-  void addToWatchlist(String title, String imageUrl) {
-    _watchlist.add({'title': title, 'imageUrl': imageUrl});
+  void addToWatchlist(int id, String title, String imageUrl) {
+    _watchlist.add({'id': id, 'title': title, 'imageUrl': imageUrl});
     notifyListeners();
   }
 
-  void removeFromWatchlist(String title) {
-    _watchlist.removeWhere((movie) => movie['title'] == title);
+  void removeFromWatchlist(int id) {
+    _watchlist.removeWhere((movie) => movie['id'] == id);
     notifyListeners();
   }
 
-  bool isInWatchlist(String title) {
-    return _watchlist.any((movie) => movie['title'] == title);
+  bool isInWatchlist(int id) {
+    return _watchlist.any((movie) => movie['id'] == id);
   }
 
-  void addToFavorites(String title, String imageUrl) {
-    _favorites.add({'title': title, 'imageUrl': imageUrl});
+  void addToFavorites(int id, String title, String imageUrl) {
+    _favorites.add({'id': id, 'title': title, 'imageUrl': imageUrl});
     notifyListeners();
   }
 
-  void removeFromFavorites(String title) {
-    _favorites.removeWhere((movie) => movie['title'] == title);
+  void removeFromFavorites(int id) {
+    _favorites.removeWhere((movie) => movie['id'] == id);
     notifyListeners();
   }
 
-  bool isInFavorites(String title) {
-    return _favorites.any((movie) => movie['title'] == title);
+  bool isInFavorites(int id) {
+    return _favorites.any((movie) => movie['id'] == id);
   }
 }

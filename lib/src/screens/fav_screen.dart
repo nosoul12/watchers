@@ -41,8 +41,9 @@ class FavScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => MovieDetailScreen(
-                          title: movie['title']!,
-                          imageUrl: movie['imageUrl']!,
+                          movieId: movie['id'],
+                          title: movie['title'],
+                          imageUrl: movie['imageUrl'],
                         ),
                       ),
                     );
@@ -55,9 +56,10 @@ class FavScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         ClipRRect(
-                          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                          borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(12)),
                           child: Image.network(
-                            movie['imageUrl']!,
+                            movie['imageUrl'],
                             height: 150,
                             width: double.infinity,
                             fit: BoxFit.cover,
@@ -69,17 +71,20 @@ class FavScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                movie['title']!,
-                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                movie['title'],
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   IconButton(
-                                    icon: const Icon(Icons.delete, color: Colors.red),
+                                    icon: const Icon(Icons.delete,
+                                        color: Colors.red),
                                     onPressed: () {
-                                      watchlistProvider.removeFromFavorites(movie['title']!);
+                                      watchlistProvider
+                                          .removeFromFavorites(movie['id']);
                                     },
                                   ),
                                 ],
