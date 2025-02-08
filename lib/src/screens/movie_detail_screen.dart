@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:watchers/src/models/movie.dart';
 import 'package:watchers/src/providers/watchlist_provider.dart';
 import 'package:watchers/src/services/movie_serviece.dart';
 
@@ -20,7 +21,7 @@ class MovieDetailScreen extends StatefulWidget {
 }
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
-  Map<String, dynamic>? movieDetails;
+  Movie? movieDetails;
   bool isLoading = true;
 
   @override
@@ -111,7 +112,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text("Description",
+                  const Text("Overview",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
@@ -121,14 +122,44 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(8)),
                     child: Text(
-                      movieDetails?['overview'] ?? "No description available.",
+                      movieDetails?.overview ?? "No description available.",
                       style:
                           const TextStyle(fontSize: 16, color: Colors.black54),
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  _buildDetailRow(
+                      "Original Title:", movieDetails?.originalTitle),
+                  _buildDetailRow("Release Date:", movieDetails?.releaseDate),
+                  _buildDetailRow(
+                      "Rating:", movieDetails?.voteAverage.toString()),
+                  _buildDetailRow("Language:", movieDetails?.originalLanguage),
+                  _buildDetailRow(
+                      "Popularity:", movieDetails?.popularity.toString()),
+                  _buildDetailRow(
+                      "Vote Count:", movieDetails?.voteCount.toString()),
                 ],
               ),
             ),
+    );
+  }
+
+  Widget _buildDetailRow(String label, String? value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            value ?? "N/A",
+            style: const TextStyle(fontSize: 16),
+          ),
+        ],
+      ),
     );
   }
 }

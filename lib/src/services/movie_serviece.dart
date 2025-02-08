@@ -1,23 +1,39 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:watchers/src/models/movie.dart';
 
 class MovieService {
-  static const String _apiKey = 'YOUR_TMDB_API_KEY';
-  static const String _baseUrl = 'https://api.themoviedb.org/3/movie';
+  static Future<Movie> fetchMovieDetails(int movieId) async {
+    final response = await http.get(
+        Uri.parse('https://backendof-watchers.onrender.com/movie/$movieId'));
 
-  static Future<Map<String, dynamic>> fetchMovieDetails(int movieId) async {
-    final url = '$_baseUrl/$movieId?api_key=$_apiKey&language=en-US';
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> decodedData = json.decode(response.body);
+      return Movie.fromJson(decodedData);
+    } else {
+      throw Exception('Failed to load movie details');
+    }
+  }
 
-    try {
-      final response = await http.get(Uri.parse(url));
+  static Future<List<Movie>> fetchMovies() async {
+    final response = await http
+        .get(Uri.parse('https://backendof-watchers.onrender.com/trending'));
 
-      if (response.statusCode == 200) {
-        return json.decode(response.body);
+    if (response.statusCode == 200) {
+      final decodedData = json.decode(response.body);
+
+      if (decodedData is List) {
+        return decodedData.map((json) => Movie.fromJson(json)).toList();
+      } else if (decodedData.containsKey('results') &&
+          decodedData['results'] is List) {
+        final List<dynamic> moviesJson = decodedData['results'];
+        return moviesJson.map((json) => Movie.fromJson(json)).toList();
       } else {
-        throw Exception('Failed to load movie details');
+        throw Exception(
+            'Invalid API response: JSON is not a list and "results" field is missing or not a list');
       }
-    } catch (e) {
-      throw Exception('Error fetching movie details: $e');
+    } else {
+      throw Exception('Failed to load movies');
     }
   }
 }

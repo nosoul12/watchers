@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watchers/src/providers/watchlist_provider.dart';
+import 'package:watchers/src/screens/splash_screen.dart';
 
 import 'package:watchers/src/widgets/bottom_nav_bar.dart';
 
@@ -26,7 +27,7 @@ class WatcherApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
       ),
-      home: const BottomTb(),
+      home: SplashScreen(),
     );
   }
 }

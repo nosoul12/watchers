@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:watchers/src/models/movie.dart';
 import 'package:watchers/src/providers/watchlist_provider.dart';
 import 'package:watchers/src/screens/movie_detail_screen.dart';
 import 'package:watchers/src/screens/search_screen.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:watchers/src/services/movie_serviece.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    fetchTrendingMovies();
+    loadMovies();
   }
 
   Future<void> fetchTrendingMovies() async {
@@ -34,11 +35,12 @@ class _HomePageState extends State<HomePage> {
           .get(Uri.parse('https://backendof-watchers.onrender.com/trending'));
 
       if (response.statusCode == 200) {
-        final List<dynamic> movies = json.decode(response.body);
+        final List<dynamic> decodedData = json.decode(response.body);
+        print('Decoded Data: $decodedData'); // Print the JSON response
 
         setState(() {
-          _movies = movies
-              .map((movie) => {
+          _movies = decodedData
+              .map<Map<String, dynamic>>((movie) => {
                     'id': movie['id'],
                     'title': movie['title'],
                     'imageUrl':
@@ -51,6 +53,29 @@ class _HomePageState extends State<HomePage> {
       } else {
         throw Exception('Failed to load movies');
       }
+    } catch (e) {
+      print("Error fetching movies: $e");
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> loadMovies() async {
+    try {
+      List<Movie> fetchedMovies = await MovieService.fetchMovies();
+      setState(() {
+        _movies = fetchedMovies
+            .map<Map<String, dynamic>>((movie) => {
+                  'id': movie.id,
+                  'title': movie.title,
+                  'imageUrl':
+                      'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                })
+            .toList();
+        _filteredMovies = _movies;
+        _isLoading = false;
+      });
     } catch (e) {
       print("Error fetching movies: $e");
       setState(() {
@@ -133,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => MovieDetailScreen(
-                                      movieId: movie['id'], // Add this
+                                      movieId: movie['id'],
                                       title: movie['title'],
                                       imageUrl: movie['imageUrl'],
                                     )),
