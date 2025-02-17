@@ -9,6 +9,7 @@ import 'package:watchers/src/screens/movie_detail_screen.dart';
 import 'package:watchers/src/screens/search_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:watchers/src/services/movie_serviece.dart';
+import 'package:watchers/src/widgets/custom_app_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -98,10 +99,7 @@ class _HomePageState extends State<HomePage> {
     final watchlistProvider = Provider.of<WatchlistProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Watcher'),
-        centerTitle: true,
-      ),
+      appBar: Appt(),
       body: Column(
         children: [
           Padding(

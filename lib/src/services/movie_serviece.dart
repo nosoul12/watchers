@@ -15,6 +15,27 @@ class MovieService {
     }
   }
 
+  static Future<List<Movie>> searchMovies(String query) async {
+    final response = await http.get(Uri.parse(
+        'https://backendof-watchers.onrender.com/search?query=$query'));
+
+    if (response.statusCode == 200) {
+      final decodedData = json.decode(response.body);
+
+      if (decodedData is List) {
+        return decodedData.map((json) => Movie.fromJson(json)).toList();
+      } else if (decodedData.containsKey('results') &&
+          decodedData['results'] is List) {
+        final List<dynamic> moviesJson = decodedData['results'];
+        return moviesJson.map((json) => Movie.fromJson(json)).toList();
+      } else {
+        throw Exception('Invalid API response');
+      }
+    } else {
+      throw Exception('Failed to load search results');
+    }
+  }
+
   static Future<List<Movie>> fetchMovies() async {
     final response = await http
         .get(Uri.parse('https://backendof-watchers.onrender.com/trending'));
