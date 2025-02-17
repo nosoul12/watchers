@@ -1,13 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:watchers/src/models/movie.dart';
 import 'package:watchers/src/providers/watchlist_provider.dart';
 import 'package:watchers/src/screens/movie_detail_screen.dart';
-import 'package:watchers/src/screens/search_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:watchers/src/services/movie_serviece.dart';
 
 import 'package:watchers/src/widgets/custom_app_bar.dart';
@@ -21,9 +17,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController _searchController = TextEditingController();
-  List<Map<String, dynamic>> _movies = [];
-  List<Map<String, dynamic>> _filteredMovies = [];
+  List<Movie> _movies = [];
+  List<Movie> _filteredMovies = [];
   bool _isLoading = true;
+  bool _isError = false;
 
   @override
   void initState() {
@@ -31,90 +28,56 @@ class _HomePageState extends State<HomePage> {
     loadMovies();
   }
 
-  Future<void> fetchTrendingMovies() async {
-    try {
-      final response = await http.get(
-          Uri.parse('https://backendof-watchers.onrender.com/tmdb/trending'));
-
-      if (response.statusCode == 200) {
-        final List<dynamic> decodedData = json.decode(response.body);
-        print('Decoded Data: $decodedData'); // Print the JSON response
-
-        setState(() {
-          _movies = decodedData
-              .map<Map<String, dynamic>>((movie) => {
-                    'id': movie['id'],
-                    'title': movie['title'],
-                    'imageUrl':
-                        'https://image.tmdb.org/t/p/w500${movie['poster_path']}',
-                  })
-              .toList();
-          _filteredMovies = _movies;
-          _isLoading = false;
-        });
-      } else {
-        throw Exception('Failed to load movies');
-      }
-    } catch (e) {
-      print("Error fetching movies: $e");
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
+  /// Loads trending movies
   Future<void> loadMovies() async {
-    try {
-      List<Movie> fetchedMovies = await MovieService.fetchMovies();
-      setState(() {
-        _movies = fetchedMovies
-            .map<Map<String, dynamic>>((movie) => {
-                  'id': movie.id,
-                  'title': movie.title,
-                  'imageUrl':
-                      'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-                })
-            .toList();
-        _filteredMovies = _movies;
-        _isLoading = false;
-      });
-    } catch (e) {
-      print("Error fetching movies: $e");
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  Future<void> searchMovies(String query) async {
     setState(() {
       _isLoading = true;
+      _isError = false;
     });
 
     try {
-      final response = await http.get(
-        Uri.parse(
-            'https://backendof-watchers.onrender.com/tmdb/search?query=$query'),
-      );
+      List<Movie> fetchedMovies = await MovieService.fetchMovies();
+      setState(() {
+        _movies = fetchedMovies;
+        _filteredMovies = fetchedMovies;
+      });
+    } catch (e) {
+      print("Error fetching movies: $e");
+      setState(() {
+        _isError = true;
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
-      if (response.statusCode == 200) {
-        final List<dynamic> decodedData = json.decode(response.body);
-        setState(() {
-          _filteredMovies = decodedData
-              .map<Map<String, dynamic>>((movie) => {
-                    'id': movie['id'],
-                    'title': movie['title'],
-                    'imageUrl':
-                        'https://image.tmdb.org/t/p/w500${movie['poster_path']}',
-                  })
-              .toList();
-          _isLoading = false;
-        });
-      } else {
-        throw Exception('Failed to load search results');
-      }
+  /// Searches movies based on user input
+  Future<void> searchMovies(String query) async {
+    if (query.isEmpty) {
+      setState(() {
+        _filteredMovies = _movies;
+      });
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+      _isError = false;
+    });
+
+    try {
+      List<Movie> searchedMovies = await MovieService.searchMovies(query);
+      setState(() {
+        _filteredMovies = searchedMovies;
+      });
     } catch (e) {
       print("Error searching movies: $e");
+      setState(() {
+        _isError = true;
+      });
+    } finally {
       setState(() {
         _isLoading = false;
       });
@@ -133,15 +96,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(10),
             child: TextField(
               controller: _searchController,
-              onChanged: (query) {
-                if (query.isEmpty) {
-                  setState(() {
-                    _filteredMovies = _movies;
-                  });
-                } else {
-                  searchMovies(query);
-                }
-              },
+              onChanged: searchMovies,
               decoration: InputDecoration(
                 hintText: "Search movies...",
                 prefixIcon: Icon(Icons.search),
@@ -153,86 +108,121 @@ class _HomePageState extends State<HomePage> {
           ),
           Expanded(
             child: _isLoading
-                ? GridView.builder(
-                    padding: const EdgeInsets.all(10),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 0.7,
-                    ),
-                    itemCount: 6,
-                    itemBuilder: (context, index) => Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!,
-                      child: Container(
-                        height: 150,
-                        width: 100,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                : GridView.builder(
-                    padding: const EdgeInsets.all(10),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 0.7,
-                    ),
-                    itemCount: _filteredMovies.length,
-                    itemBuilder: (context, index) {
-                      final movie = _filteredMovies[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MovieDetailScreen(
-                                      movieId: movie['id'],
-                                      title: movie['title'],
-                                      imageUrl: movie['imageUrl'],
-                                    )),
-                          );
-                        },
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          elevation: 5,
-                          child: Column(
-                            children: [
-                              ClipRRect(
-                                borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(12)),
-                                child: Image.network(
-                                  movie['imageUrl']!,
-                                  height: 150,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  movie['title']!,
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ), 
+                ? _buildLoadingGrid()
+                : _isError
+                    ? _buildErrorWidget()
+                    : _filteredMovies.isEmpty
+                        ? _buildNoResultsWidget()
+                        : _buildMovieGrid(),
           ),
         ],
       ),
+    );
+  }
+
+  /// Loading shimmer effect
+  Widget _buildLoadingGrid() {
+    return GridView.builder(
+      padding: const EdgeInsets.all(10),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 0.7,
+      ),
+      itemCount: 6,
+      itemBuilder: (context, index) => Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: Container(
+          height: 150,
+          width: 100,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  /// Error handling UI
+  Widget _buildErrorWidget() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.error, color: Colors.red, size: 50),
+          SizedBox(height: 10),
+          Text("Failed to load movies. Please try again."),
+          ElevatedButton(
+            onPressed: loadMovies,
+            child: Text("Retry"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// No results UI
+  Widget _buildNoResultsWidget() {
+    return Center(
+      child: Text(
+        "No movies found!",
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  /// Movie Grid UI
+  Widget _buildMovieGrid() {
+    return GridView.builder(
+      padding: const EdgeInsets.all(10),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 0.7,
+      ),
+      itemCount: _filteredMovies.length,
+      itemBuilder: (context, index) {
+        final movie = _filteredMovies[index];
+
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MovieDetailScreen(
+                  movieId: movie.id,
+                  title: movie.title,
+                  imageUrl: movie.posterPath != null
+                      ? 'https://image.tmdb.org/t/p/w500${movie.posterPath}'
+                      : 'https://via.placeholder.com/150',
+                ),
+              ),
+            );
+          },
+          child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            elevation: 5,
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(12)),
+                  child: Image.network(
+                    movie.posterPath != null
+                        ? 'https://image.tmdb.org/t/p/w500${movie.posterPath}'
+                        : 'https://via.placeholder.com/150',
+                    height: 150,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
