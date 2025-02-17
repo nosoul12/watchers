@@ -9,6 +9,7 @@ import 'package:watchers/src/screens/movie_detail_screen.dart';
 import 'package:watchers/src/screens/search_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:watchers/src/services/movie_serviece.dart';
+
 import 'package:watchers/src/widgets/custom_app_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,8 +33,8 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> fetchTrendingMovies() async {
     try {
-      final response = await http
-          .get(Uri.parse('https://backendof-watchers.onrender.com/trending'));
+      final response = await http.get(
+          Uri.parse('https://backendof-watchers.onrender.com/tmdb/trending'));
 
       if (response.statusCode == 200) {
         final List<dynamic> decodedData = json.decode(response.body);
@@ -85,13 +86,39 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _searchMovies(String query) {
+  Future<void> searchMovies(String query) async {
     setState(() {
-      _filteredMovies = _movies
-          .where((movie) =>
-              movie['title']!.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      _isLoading = true;
     });
+
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'https://backendof-watchers.onrender.com/tmdb/search?query=$query'),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> decodedData = json.decode(response.body);
+        setState(() {
+          _filteredMovies = decodedData
+              .map<Map<String, dynamic>>((movie) => {
+                    'id': movie['id'],
+                    'title': movie['title'],
+                    'imageUrl':
+                        'https://image.tmdb.org/t/p/w500${movie['poster_path']}',
+                  })
+              .toList();
+          _isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load search results');
+      }
+    } catch (e) {
+      print("Error searching movies: $e");
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -106,7 +133,15 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(10),
             child: TextField(
               controller: _searchController,
-              onChanged: _searchMovies,
+              onChanged: (query) {
+                if (query.isEmpty) {
+                  setState(() {
+                    _filteredMovies = _movies;
+                  });
+                } else {
+                  searchMovies(query);
+                }
+              },
               decoration: InputDecoration(
                 hintText: "Search movies...",
                 prefixIcon: Icon(Icons.search),

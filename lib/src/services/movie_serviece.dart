@@ -5,7 +5,8 @@ import 'package:watchers/src/models/movie.dart';
 class MovieService {
   static Future<Movie> fetchMovieDetails(int movieId) async {
     final response = await http.get(
-        Uri.parse('https://backendof-watchers.onrender.com/movie/$movieId'));
+      Uri.parse('https://backendof-watchers.onrender.com/tmdb/movie/$movieId'),
+    );
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> decodedData = json.decode(response.body);
@@ -16,8 +17,10 @@ class MovieService {
   }
 
   static Future<List<Movie>> searchMovies(String query) async {
-    final response = await http.get(Uri.parse(
-        'https://backendof-watchers.onrender.com/search?query=$query'));
+    final response = await http.get(
+      Uri.parse(
+          'https://backendof-watchers.onrender.com/tmdb/search?query=$query'),
+    );
 
     if (response.statusCode == 200) {
       final decodedData = json.decode(response.body);
@@ -37,8 +40,9 @@ class MovieService {
   }
 
   static Future<List<Movie>> fetchMovies() async {
-    final response = await http
-        .get(Uri.parse('https://backendof-watchers.onrender.com/trending'));
+    final response = await http.get(
+      Uri.parse('https://backendof-watchers.onrender.com/tmdb/trending'),
+    );
 
     if (response.statusCode == 200) {
       final decodedData = json.decode(response.body);

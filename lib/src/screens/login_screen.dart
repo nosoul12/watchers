@@ -24,6 +24,23 @@ class LoginScreen extends StatelessWidget {
                 color: Colors.blue,
               ),
             ),
+            SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.yellow[100],
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "🚧 This feature will be available soon. Service is under development 🚧",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.orange,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
             SizedBox(height: 20),
             TextField(
               controller: _emailController,

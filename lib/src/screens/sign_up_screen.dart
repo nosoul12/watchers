@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class SignUpScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,23 @@ class SignUpScreen extends StatelessWidget {
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
+              ),
+            ),
+            SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.yellow[100],
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "🚧 This feature will be available soon. Service is under development. We told you already! 🚧",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.orange,
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
             SizedBox(height: 20),
