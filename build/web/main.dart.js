@@ -23701,7 +23701,7 @@ a3d(){var s=0,r=A.O(t.Zz),q,p=2,o,n,m,l,k,j,i
 var $async$a3d=A.K(function(a,b){if(a===1){o=b
 s=p}while(true)switch(s){case 0:p=4
 s=7
-return A.Q(A.amC(A.eN("https://backendof-watchers.onrender.com/tmdb/trending")),$async$a3d)
+return A.Q(A.amC(A.eN("https://backend-vpms.onrender.com/tmdb/trending")),$async$a3d)
 case 7:n=b
 if(n.b===200){k=n
 m=B.ca.dY(A.amz(A.amd(k.e).c.a.h(0,"charset")).dY(k.w))
@@ -23734,7 +23734,7 @@ aA6(a){var s=0,r=A.O(t.Zz),q,p=2,o,n,m,l,k,j,i
 var $async$a3f=A.K(function(b,c){if(b===1){o=c
 s=p}while(true)switch(s){case 0:p=4
 s=7
-return A.Q(A.amC(A.eN("https://backendof-watchers.onrender.com/tmdb/search?query="+a)),$async$a3f)
+return A.Q(A.amC(A.eN("https://backend-vpms.onrender.com/tmdb/search?query="+a)),$async$a3f)
 case 7:n=c
 if(n.b===200){k=n
 m=B.ca.dY(A.amz(A.amd(k.e).c.a.h(0,"charset")).dY(k.w))
@@ -23772,7 +23772,7 @@ aA5(a){var s=0,r=A.O(t.ce),q,p=2,o,n,m,l,k,j,i
 var $async$a3c=A.K(function(b,c){if(b===1){o=c
 s=p}while(true)switch(s){case 0:p=4
 s=7
-return A.Q(A.amC(A.eN("https://backendof-watchers.onrender.com/tmdb/movie/"+a)),$async$a3c)
+return A.Q(A.amC(A.eN("https://backend-vpms.onrender.com/tmdb/movie/"+a)),$async$a3c)
 case 7:n=c
 if(n.b===200){k=n
 m=B.ca.dY(A.amz(A.amd(k.e).c.a.h(0,"charset")).dY(k.w))

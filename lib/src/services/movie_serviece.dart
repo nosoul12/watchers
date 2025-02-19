@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:watchers/src/models/movie.dart';
 
 class MovieService {
-  static const String baseUrl = "https://backendof-watchers.onrender.com";
+  static const String baseUrl = "https://backend-vpms.onrender.com";
 
   static Future<List<Movie>> fetchMovies() async {
     try {
