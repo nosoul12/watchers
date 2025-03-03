@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:watchers/src/providers/user_provider.dart';
 import 'package:watchers/src/providers/watchlist_provider.dart';
 import 'package:watchers/src/screens/home_screen.dart';
 import 'package:watchers/src/screens/splash_screen.dart';
@@ -10,7 +11,9 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => WatchlistProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(
+            create: (context) => WatchlistProvider()), // Add this if missing
       ],
       child: const WatcherApp(),
     ),

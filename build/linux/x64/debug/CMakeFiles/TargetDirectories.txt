@@ -18,3 +18,10 @@
 /home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/runner/CMakeFiles/list_install_components.dir
 /home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/runner/CMakeFiles/rebuild_cache.dir
 /home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/runner/CMakeFiles/watchers.dir
+/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/install/strip.dir
+/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/install/local.dir
+/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/install.dir
+/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/list_install_components.dir
+/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/rebuild_cache.dir
+/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/edit_cache.dir
+/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/flutter_secure_storage_linux_plugin.dir

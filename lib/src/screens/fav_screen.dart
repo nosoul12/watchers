@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watchers/src/providers/watchlist_provider.dart';
+import 'package:watchers/src/providers/user_provider.dart';
 import 'package:watchers/src/screens/movie_detail_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class FavScreen extends StatelessWidget {
   const FavScreen({super.key});
@@ -9,6 +12,8 @@ class FavScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final watchlistProvider = Provider.of<WatchlistProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
+    final userId = userProvider.userId;
     final favorites = watchlistProvider.favorites;
 
     return Scaffold(
@@ -101,3 +106,34 @@ class FavScreen extends StatelessWidget {
     );
   }
 }
+
+
+// class MovieService {
+//   static const String baseUrl = 'https://api.example.com';
+
+//   static Future<List<dynamic>> getWatchlist(String userId) async {
+//     final response = await http.get(
+//       Uri.parse('$baseUrl/watchlist?userId=$userId'),
+//       headers: {'Content-Type': 'application/json'},
+//     );
+
+//     if (response.statusCode == 200) {
+//       return json.decode(response.body)['watchlist'];
+//     } else {
+//       throw Exception('Failed to load watchlist');
+//     }
+//   }
+
+//   static Future<List<dynamic>> getFavorites(String userId) async {
+//     final response = await http.get(
+//       Uri.parse('$baseUrl/favorites?userId=$userId'),
+//       headers: {'Content-Type': 'application/json'},
+//     );
+
+//     if (response.statusCode == 200) {
+//       return json.decode(response.body)['favorites'];
+//     } else {
+//       throw Exception('Failed to load favorites');
+//     }
+//   }
+// }

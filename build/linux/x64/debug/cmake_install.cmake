@@ -63,7 +63,7 @@ file(INSTALL DESTINATION "/home/yash/flutter/projects/frontend/watchers/build/li
      NOT IS_SYMLINK "$ENV{DESTDIR}/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/bundle/watchers")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/bundle/watchers"
-         OLD_RPATH "/home/yash/flutter/projects/frontend/watchers/linux/flutter/ephemeral:"
+         OLD_RPATH "/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/plugins/flutter_secure_storage_linux:/home/yash/flutter/projects/frontend/watchers/linux/flutter/ephemeral:"
          NEW_RPATH "$ORIGIN/lib")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/snap/flutter/current/usr/bin/strip" "$ENV{DESTDIR}/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/bundle/watchers")
@@ -93,6 +93,18 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMP
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
 file(INSTALL DESTINATION "/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/bundle/lib" TYPE FILE FILES "/home/yash/flutter/projects/frontend/watchers/linux/flutter/ephemeral/libflutter_linux_gtk.so")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/bundle/lib/libflutter_secure_storage_linux_plugin.so")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+file(INSTALL DESTINATION "/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/bundle/lib" TYPE FILE FILES "/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/plugins/flutter_secure_storage_linux/libflutter_secure_storage_linux_plugin.so")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -129,6 +141,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/flutter/cmake_install.cmake")
   include("/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/runner/cmake_install.cmake")
+  include("/home/yash/flutter/projects/frontend/watchers/build/linux/x64/debug/plugins/flutter_secure_storage_linux/cmake_install.cmake")
 
 endif()
 

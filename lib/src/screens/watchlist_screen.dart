@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watchers/src/providers/watchlist_provider.dart';
+import 'package:watchers/src/providers/user_provider.dart';
 import 'package:watchers/src/screens/movie_detail_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class WatchlistScreen extends StatelessWidget {
   const WatchlistScreen({super.key});
@@ -9,6 +12,8 @@ class WatchlistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final watchlistProvider = Provider.of<WatchlistProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
+    final userId = userProvider.userId;
     final watchlist = watchlistProvider.watchlist;
 
     return Scaffold(
@@ -34,7 +39,7 @@ class WatchlistScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => MovieDetailScreen(
-                                movieId: movie['id'], // Add this
+                                movieId: movie['id'],
                                 title: movie['title'],
                                 imageUrl: movie['imageUrl'],
                               )),

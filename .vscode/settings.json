@@ -1,3 +1,69 @@
 {
-    "cmake.sourceDirectory": "/home/yash/flutter/projects/frontend/watchers/linux"
+    "cmake.sourceDirectory": "/home/yash/flutter/projects/frontend/watchers/linux",
+    "terrys-todos.data": [
+        {
+            "type": "Todo",
+            "id": "2VXpDyfxxbRu7IElTS5etuXrv#FvJex0",
+            "text": "heyyy",
+            "date": "23.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "s7ab-dAsF3GaveBh5U8oeFR3vH1-OjH3",
+            "text": "fix signup",
+            "date": "23.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "JTgi7MRD5rGQwoeR4zm-Htd0#hn6-tid",
+            "text": "add and remove from watchlist/fav",
+            "date": "23.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "RTAiNYxik#pJKXQiP9AXcemzmpEosTuO",
+            "text": "render watchlist/fav",
+            "date": "23.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "v0Ua-yK#h320s-uxoe3nVvmcH8Ws__Rp",
+            "text": "fix appbar logout",
+            "date": "23.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "iwCNPkfV81D#IHUfrAj2S8rBMfCXfoYY",
+            "text": "title at home screen fix ",
+            "date": "23.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        },
+        {
+            "type": "Todo",
+            "id": "mLctbwaGNO#4TFuXjx9j_YVvhTVv-WNh",
+            "text": "add a bottom scroll pages",
+            "date": "23.2.2025",
+            "color": "blue",
+            "folderPath": [],
+            "addedToCommitMessage": false
+        }
+    ],
+    "terrys-todos.done-todos": []
 }
