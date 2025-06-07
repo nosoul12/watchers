@@ -106,34 +106,3 @@ class FavScreen extends StatelessWidget {
     );
   }
 }
-
-
-// class MovieService {
-//   static const String baseUrl = 'https://api.example.com';
-
-//   static Future<List<dynamic>> getWatchlist(String userId) async {
-//     final response = await http.get(
-//       Uri.parse('$baseUrl/watchlist?userId=$userId'),
-//       headers: {'Content-Type': 'application/json'},
-//     );
-
-//     if (response.statusCode == 200) {
-//       return json.decode(response.body)['watchlist'];
-//     } else {
-//       throw Exception('Failed to load watchlist');
-//     }
-//   }
-
-//   static Future<List<dynamic>> getFavorites(String userId) async {
-//     final response = await http.get(
-//       Uri.parse('$baseUrl/favorites?userId=$userId'),
-//       headers: {'Content-Type': 'application/json'},
-//     );
-
-//     if (response.statusCode == 200) {
-//       return json.decode(response.body)['favorites'];
-//     } else {
-//       throw Exception('Failed to load favorites');
-//     }
-//   }
-// }

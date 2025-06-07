@@ -1,0 +1,1 @@
+ C:\\resume_grind\\client\\watchers\\.dart_tool\\flutter_gen\\gen_l10n\\app_localizations_en.dart C:\\resume_grind\\client\\watchers\\.dart_tool\\flutter_gen\\gen_l10n\\app_localizations.dart:  C:\\resume_grind\\client\\watchers\\l10n.yaml C:\\resume_grind\\client\\watchers\\lib/src/localization\\app_en.arb
